@@ -11,5 +11,10 @@ UCLASS()
 class DUNGEONLABIRINT_API ADLBaseHUD : public AHUD
 {
 	GENERATED_BODY()
-	
+
+protected:
+	virtual void BeginPlay() override;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	TSubclassOf<UUserWidget> MainWidget;
 };
