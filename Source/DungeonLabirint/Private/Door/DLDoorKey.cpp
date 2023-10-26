@@ -3,6 +3,8 @@
 
 #include "Door/DLDoorKey.h"
 #include "Components/SphereComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 ADLDoorKey::ADLDoorKey()
 {
@@ -29,11 +31,22 @@ void ADLDoorKey::BeginPlay()
 	GenerateRotationYaw();
 }
 
-void ADLDoorKey::GenerateRotationYaw()
+void ADLDoorKey::OnRaised()
 {
 	if (!GetWorld()) return;
 
-	const auto Direction = FMath::RandBool() ? 1.0f : -1.0f;
-	RotationYaw = FMath::RandRange(1.0f, 2.0f) * Direction;
+	if (KeySound)
+	{
+		UGameplayStatics::PlaySound2D(GetWorld(), KeySound);
+	}
+
+	Destroy();
 }
 
+void ADLDoorKey::GenerateRotationYaw()
+{
+	if (!GetWorld()) return;
+    
+    const auto Direction = FMath::RandBool() ? 1.0f : -1.0f;
+    RotationYaw = FMath::RandRange(1.0f, 2.0f) * Direction;
+}

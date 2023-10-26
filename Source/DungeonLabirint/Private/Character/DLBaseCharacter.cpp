@@ -97,7 +97,7 @@ void ADLBaseCharacter::CheckOverlapKey()
 	for (auto OverlappedActor : OverlappedActors)
 	{
 		ADLDoorKey* Key = Cast<ADLDoorKey>(OverlappedActor);
-		Key->Destroy();
+		Key->OnRaised();
 	}
 
 	AmountKeys += 1;

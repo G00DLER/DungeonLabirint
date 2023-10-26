@@ -7,6 +7,7 @@
 #include "DLDoorKey.generated.h"
 
 class USphereComponent;
+class USoundCue;
 
 UCLASS()
 class DUNGEONLABIRINT_API ADLDoorKey : public AActor
@@ -17,8 +18,9 @@ public:
 	ADLDoorKey();
 	
 	virtual void Tick(float DeltaTime) override;
-
 	virtual void BeginPlay() override;
+
+	void OnRaised();
 	
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -26,6 +28,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USphereComponent* KeyCollision;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundCue* KeySound;
 
 private:
 	float RotationYaw;
