@@ -31,12 +31,11 @@ protected:
 
 private:
 	int AmountKeys = 0;
+	int FinalKey = 0;
 	
 	void MoveForward(float Amount);
 	void MoveRight(float Amount);
 	void IsJumping();
 	void Interact();
 	void CheckOverlapKey();
-
-	void TestAmountKey();
 };

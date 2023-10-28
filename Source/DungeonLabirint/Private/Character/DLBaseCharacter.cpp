@@ -43,7 +43,6 @@ void ADLBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &ADLBaseCharacter::Interact);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ADLBaseCharacter::IsJumping);
-	PlayerInputComponent->BindAction("TestAmountKey", IE_Pressed, this, &ADLBaseCharacter::TestAmountKey);
 }
 
 void ADLBaseCharacter::MoveForward(float Amount)
@@ -79,10 +78,28 @@ void ADLBaseCharacter::Interact()
 	for (auto OverlappedActor : OverlappedActors)
 	{
 		ADLDoor* Door = Cast<ADLDoor>(OverlappedActor);
-		Door->OpenDoor();
-	}
+		TArray<FName> DoorTags = Door->Tags;
+		
 
-	AmountKeys -= 1;
+		for (auto Tag : DoorTags)
+		{
+			if (Tag == "DoorFinal")
+			{
+				if (FinalKey <= 0) return;
+				else
+				{
+					Door->OpenDoor();
+					FinalKey -= 1;
+					AmountKeys -= 1;
+				}
+			}
+			else if (Tag == "DefaultDoor")
+			{
+				Door->OpenDoor();
+				AmountKeys -= 1;
+			}
+		}
+	}
 }
 
 void ADLBaseCharacter::CheckOverlapKey()
@@ -97,13 +114,21 @@ void ADLBaseCharacter::CheckOverlapKey()
 	for (auto OverlappedActor : OverlappedActors)
 	{
 		ADLDoorKey* Key = Cast<ADLDoorKey>(OverlappedActor);
+		TArray<FName> KeyTags = Key->Tags;
+
+		for (auto Tag : KeyTags)
+		{
+			if (Tag == "KeyFinal")
+			{
+				FinalKey += 1;
+				AmountKeys += 1;
+			}
+			else if (Tag == "DefaultKey")
+			{
+				AmountKeys += 1;
+			}
+		}
+		
 		Key->OnRaised();
 	}
-
-	AmountKeys += 1;
-}
-
-void ADLBaseCharacter::TestAmountKey()
-{
-	UE_LOG(LogTemp, Display, TEXT("Количество ключей - %i"), AmountKeys);
 }
