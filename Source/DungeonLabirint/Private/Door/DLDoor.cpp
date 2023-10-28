@@ -29,6 +29,13 @@ void ADLDoor::OpenDoor()
 	IsOpen = true;
 }
 
+void ADLDoor::DontOpenDoor()
+{
+	if (!GetWorld()) return;
+
+	UGameplayStatics::PlaySound2D(GetWorld(), DontOpenDoorSound);
+}
+
 void ADLDoor::BeginPlay()
 {
 	Super::BeginPlay();

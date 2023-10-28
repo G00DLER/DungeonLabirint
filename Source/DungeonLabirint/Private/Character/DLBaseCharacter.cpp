@@ -68,7 +68,7 @@ void ADLBaseCharacter::IsJumping()
 
 void ADLBaseCharacter::Interact()
 {
-	if (!GetWorld() || AmountKeys <= 0) return;
+	if (!GetWorld()) return;
 
 	TArray<AActor*> OverlappedActors;
 	GetOverlappingActors(OverlappedActors, ADLDoor::StaticClass());
@@ -78,14 +78,27 @@ void ADLBaseCharacter::Interact()
 	for (auto OverlappedActor : OverlappedActors)
 	{
 		ADLDoor* Door = Cast<ADLDoor>(OverlappedActor);
-		TArray<FName> DoorTags = Door->Tags;
-		
 
+		if (Door->DoorIsOpen()) return;
+		
+		TArray<FName> DoorTags = Door->Tags;
+
+		if (AmountKeys <= 0)
+		{
+			Door->DontOpenDoor();
+			return;
+		}
+		
 		for (auto Tag : DoorTags)
 		{
 			if (Tag == "DoorFinal")
 			{
-				if (FinalKey <= 0) return;
+				if (FinalKey <= 0)
+				{
+					Door->DontOpenDoor();
+					return;
+				}
+				
 				else
 				{
 					Door->OpenDoor();
@@ -93,6 +106,7 @@ void ADLBaseCharacter::Interact()
 					AmountKeys -= 1;
 				}
 			}
+			
 			else if (Tag == "DefaultDoor")
 			{
 				Door->OpenDoor();

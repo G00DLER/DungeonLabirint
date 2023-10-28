@@ -18,6 +18,8 @@ public:
 	ADLDoor();
 
 	void OpenDoor();
+	void DontOpenDoor();
+	bool DoorIsOpen() { return IsOpen; }
 
 protected:
 	virtual void BeginPlay() override;
@@ -33,6 +35,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USoundCue* OpenDoorSound;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundCue* DontOpenDoorSound;
 
 private:
 	bool IsOpen = false;
