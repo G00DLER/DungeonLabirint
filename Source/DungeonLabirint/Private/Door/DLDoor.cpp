@@ -3,6 +3,8 @@
 
 #include "Door/DLDoor.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 ADLDoor::ADLDoor()
 {
@@ -22,6 +24,7 @@ void ADLDoor::OpenDoor()
 {
 	if (!GetWorld() || IsOpen) return;
 
+	UGameplayStatics::PlaySound2D(GetWorld(), OpenDoorSound);
 	DoorMesh->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 	IsOpen = true;
 }

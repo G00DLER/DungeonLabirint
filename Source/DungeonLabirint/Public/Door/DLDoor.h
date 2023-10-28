@@ -7,6 +7,7 @@
 #include "DLDoor.generated.h"
 
 class UBoxComponent;
+class USoundCue;
 
 UCLASS()
 class DUNGEONLABIRINT_API ADLDoor : public AActor
@@ -29,6 +30,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UBoxComponent* BoxCollision;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundCue* OpenDoorSound;
 
 private:
 	bool IsOpen = false;

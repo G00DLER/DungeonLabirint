@@ -40,6 +40,11 @@ void ADLDoorKey::OnRaised()
 		UGameplayStatics::PlaySound2D(GetWorld(), KeySound);
 	}
 
+	if (TakeKeySound)
+	{
+		UGameplayStatics::PlaySound2D(GetWorld(), TakeKeySound);
+	}
+
 	Destroy();
 }
 

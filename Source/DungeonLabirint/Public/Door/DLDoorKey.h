@@ -32,6 +32,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USoundCue* KeySound;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundCue* TakeKeySound;
+
 private:
 	float RotationYaw;
 	
